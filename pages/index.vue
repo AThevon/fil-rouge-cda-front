@@ -1,0 +1,13 @@
+<template>
+  <div>
+    Coucouuuuuuu
+  </div>
+</template>
+
+<script lang="ts" setup>
+
+</script>
+
+<style>
+
+</style>

@@ -1,13 +1,36 @@
 <template>
-  <UContainer>
-    <UCard class="mt-10">
-      <template #header>
-        <div class="flex justify-between">
-          <h1>Welcome to Nuxt UI Starter</h1>
-          <ColorScheme><USelect v-model="$colorMode.preference" :options="['system', 'light', 'dark']" /></ColorScheme>
-        </div>
-      </template>
-      <UButton icon="i-heroicons-book-open" to="https://ui.nuxt.com" target="_blank">Open Nuxt UI Documentation</UButton>
-    </UCard>
-  </UContainer>
+	<NuxtRouteAnnouncer />
+	<NuxtLayout>
+		<NuxtPage />
+	</NuxtLayout>
+	<UNotifications />
 </template>
+
+<style>
+	.slide-fade-y-enter-active,
+	.slide-fade-y-leave-active,
+	.slide-fade-y-reverse-enter-active,
+	.slide-fade-y-reverse-leave-active {
+		transition: transform 0.4s ease, opacity 0.4s ease;
+	}
+
+	.slide-fade-y-enter-from {
+		transform: translateY(100%);
+		opacity: 0;
+	}
+
+	.slide-fade-y-leave-to {
+		transform: translateY(-100%);
+		opacity: 0;
+	}
+
+	.slide-fade-y-reverse-enter-from {
+		transform: translateY(-100%);
+		opacity: 0;
+	}
+
+	.slide-fade-y-reverse-leave-to {
+		transform: translateY(100%);
+		opacity: 0;
+	}
+</style>

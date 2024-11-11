@@ -1,24 +1,26 @@
 {
-  "name": "nuxt-app",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
-  "devDependencies": {
-    "@nuxt/devtools": "latest",
-    "@nuxt/image": "^1.8.1",
-    "@nuxt/ui": "^2.19.2",
-    "nuxt": "^3.14.159"
-  },
-  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610",
-  "dependencies": {
-    "@pinia/nuxt": "^0.7.0",
-    "lucide-vue-next": "^0.456.0",
-    "pinia": "^2.2.6"
-  }
+	"name": "nuxt-app",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "nuxt build",
+		"dev": "nuxt dev",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare"
+	},
+	"devDependencies": {
+		"@nuxt/devtools": "latest",
+		"@nuxt/fonts": "^0.10.2",
+		"@nuxt/image": "^1.8.1",
+		"@nuxt/ui": "^2.19.2",
+		"nuxt": "^3.14.159"
+	},
+	"packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610",
+	"dependencies": {
+		"@pinia/nuxt": "^0.7.0",
+		"lucide-vue-next": "^0.456.0",
+		"pinia": "^2.2.6",
+		"gsap": "^3.12.5"
+	}
 }
