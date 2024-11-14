@@ -31,11 +31,22 @@
 					</NuxtLink>
 				</li>
 			</ul>
-			<ThemeToggle />
+			<div class="flex space-x-2">
+				<UButton to="/register" class="text-sm"> S'inscrire </UButton>
+				<UButton to="/login" class="text-sm"> Se connecter </UButton>
+			</div>
 		</nav>
 		<main class="h-full">
 			<slot />
 		</main>
+		<footer class="relative flex justify-center items-center h-16">
+			<p class="absolute inset-x-0 text-sm text-center text-gray-500">
+				&copy; 2021 Woodies. Tous droits réservés.
+			</p>
+			<div class="z-10 ml-auto mr-4 mb-2">
+				<ThemeToggle />
+			</div>
+		</footer>
 	</div>
 </template>
 
