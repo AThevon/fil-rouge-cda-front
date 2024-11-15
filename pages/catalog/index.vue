@@ -15,12 +15,14 @@
 	import { useProductStore } from '~/stores/products';
 	import { storeToRefs } from 'pinia';
 
-	const apiUrl = useRuntimeConfig().public.apiUrl as string;
+	definePageMeta({
+		middleware: 'auth',
+	});
 
 	const productStore = useProductStore();
 
 	if (!productStore.products.length) {
-		await productStore.fetchProducts(apiUrl);
+		await productStore.fetchProducts();
 	}
 
 	const { products, loading, error } = storeToRefs(productStore);

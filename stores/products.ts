@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import type { Product } from '~/types';
+import { useApiFetch } from '~/composables/useApiFetch';
 
 export const useProductStore = defineStore('productStore', {
 	state: () => ({
@@ -8,10 +9,11 @@ export const useProductStore = defineStore('productStore', {
 		error: null as Error | null,
 	}),
 	actions: {
-		async fetchProducts(apiUrl: string) {
+		async fetchProducts() {
 			this.loading = true;
 			try {
-				const { data } = await useFetch<Product[]>(`${apiUrl}/products`);
+				// Utiliser useApiFetch pour la requête
+				const { data } = await useApiFetch<Product[]>('/products');
 				this.products = data.value ?? [];
 			} catch (err) {
 				this.error = err as Error;
