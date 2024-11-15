@@ -13,7 +13,7 @@ export const useProductStore = defineStore('productStore', {
 			this.loading = true;
 			try {
 				// Utiliser useApiFetch pour la requête
-				const { data } = await useApiFetch<Product[]>('/products');
+				const { data } = await useFetch<Product[]>('http://localhost:8000/api/products');
 				this.products = data.value ?? [];
 			} catch (err) {
 				this.error = err as Error;

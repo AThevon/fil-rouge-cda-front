@@ -1,13 +1,11 @@
 <template>
-  <div>
-    
-  </div>
+	<div></div>
 </template>
 
 <script lang="ts" setup>
-
+	definePageMeta({
+		middleware: ['sanctum:guest'],
+	});
 </script>
 
-<style>
-
-</style>
+<style></style>

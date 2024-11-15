@@ -1,15 +1,51 @@
 export default defineNuxtConfig({
 	compatibilityDate: '2024-11-10',
 	devtools: { enabled: true },
-	modules: ['@nuxt/ui', '@nuxt/image', '@nuxt/fonts', '@pinia/nuxt'],
+	modules: [
+		'@nuxt/ui',
+		'@nuxt/image',
+		'@nuxt/fonts',
+		'@pinia/nuxt',
+		'nuxt-auth-sanctum',
+	],
+	sanctum: {
+		mode: 'cookie',
+		userStateKey: 'sanctum.user.identity',
+		redirectIfAuthenticated: false,
+		redirectIfUnauthenticated: false,
+		endpoints: {
+			csrf: '/sanctum/csrf-cookie',
+			login: '/login',
+			logout: '/logout',
+			user: '/api/user',
+		},
+		csrf: {
+			cookie: 'XSRF-TOKEN',
+			header: 'X-XSRF-TOKEN',
+		},
+		client: {
+			retry: true,
+			initialRequest: true,
+		},
+		redirect: {
+			keepRequestedRoute: false,
+			onLogin: '/',
+			onLogout: '/',
+			onAuthOnly: '/login',
+			onGuestOnly: '/',
+		},
+		globalMiddleware: {
+			enabled: false,
+			allow404WithoutAuth: true,
+		},
+		logLevel: 3,
+		appendPlugin: false,
+	},
 	runtimeConfig: {
-		// 	AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
-		// 	AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
-		// 	AWS_REGION: process.env.AWS_REGION,
-		// 	AWS_S3_BUCKET: process.env.AWS_S3_BUCKET,
 		public: {
-			backendUrl: process.env.BACKEND_URL,
-			// 		AWS_REGION: process.env.AWS_REGION,
+			sanctum: {
+				baseUrl: process.env.BASE_URL || 'http://localhost:8000',
+			},
 		},
 	},
 	colorMode: {

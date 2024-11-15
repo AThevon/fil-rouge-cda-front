@@ -1,13 +1,17 @@
 // composables/useApiFetch.ts
 export const useApiFetch = <T>(url: string, options: any = {}) => {
-	const backendUrl = useRuntimeConfig().public.backendUrl;
-	const xsrfToken = useCookie('XSRF-TOKEN').value as string;
+	const sanctum = useNuxtApp().$sanctum as any;
+	const backendUrl = sanctum.config.baseUrl;
+
+	// Appel automatique à $sanctum.getCsrfToken() pour s'assurer que le token CSRF est récupéré
+	if (!options.skipCsrf) {
+		sanctum.getCsrfToken();
+	}
 
 	// Définir les options par défaut
 	options = {
-		credentials: 'include',
+		credentials: 'include', // Inclure les cookies pour les requêtes authentifiées
 		headers: {
-			'X-XSRF-TOKEN': xsrfToken,
 			Accept: 'application/json',
 			...options.headers,
 		},

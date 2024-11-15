@@ -1,5 +1,5 @@
 <template>
-	<div class="flex items-center justify-center min-h-screen bg-gray-100">
+	<div class="flex items-center justify-center min-h-[85vh]">
 		<div class="w-full max-w-md p-8 bg-white rounded shadow-md">
 			<h2 class="mb-6 text-2xl font-bold text-center">Connexion</h2>
 			<form @submit.prevent="handleLogin">
@@ -39,8 +39,6 @@
 			<div v-if="errorMessage" class="mt-4 text-sm text-red-600">
 				{{ errorMessage }}
 			</div>
-
-			<!-- Bouton Google Login -->
 			<div class="mt-6 text-center">
 				<button
 					@click="handleGoogleLogin"
@@ -53,32 +51,30 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
-	import { ref } from 'vue';
-	import { useAuth } from '~/composables/useAuth';
-	import { navigateTo } from '#app';
+<script setup lang="ts">
+	definePageMeta({
+		middleware: ['sanctum:guest'],
+	});
 
 	const email = ref('');
 	const password = ref('');
 	const errorMessage = ref('');
 
-	const { login, googleLogin } = useAuth();
+	const { login, refreshIdentity } = useSanctumAuth();
+	const baseUrl = useRuntimeConfig().public.sanctum.baseUrl;
 
 	const handleLogin = async () => {
 		try {
 			await login({ email: email.value, password: password.value });
-			navigateTo('/');
 		} catch (error) {
 			errorMessage.value =
 				'Échec de la connexion. Veuillez vérifier vos identifiants.';
+			await refreshIdentity();
 		}
 	};
 
 	const handleGoogleLogin = async () => {
-		try {
-			await googleLogin();
-		} catch (error) {
-			errorMessage.value = 'Échec de la connexion avec Google.';
-		}
+		window.location.href = `${baseUrl}/auth/google/redirect`;
+		await refreshIdentity();
 	};
 </script>

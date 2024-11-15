@@ -7,65 +7,36 @@ type LoginCredentials = {
 };
 
 export const useAuth = () => {
-	const backendUrl = useRuntimeConfig().public.backendUrl;
+	const { $sanctum } = useNuxtApp() as any;
 	const userStore = useUserStore();
 
-	const getCsrfToken = async () => {
-		await $fetch(`${backendUrl}/sanctum/csrf-cookie`, {
-			method: 'GET',
-			credentials: 'include',
-		});
-	};
-
+	// Login avec email et mot de passe
 	const login = async (credentials: LoginCredentials) => {
-		await getCsrfToken();
-
-		const xsrfToken = useCookie('XSRF-TOKEN').value as string;
-
-		const response = await $fetch<{ user: User }>(`${backendUrl}/login`, {
-			method: 'POST',
-			body: credentials,
-			credentials: 'include',
-			headers: {
-				Accept: 'application/json',
-				'X-XSRF-TOKEN': xsrfToken,
-				// Inutile de récupérer le XSRF-TOKEN manuellement ici, car credentials: 'include' suffit.
-			},
-		});
-
-		userStore.setUser(response.user);
+		await $sanctum.login(credentials);
+		await fetchUser();
 	};
 
+	// Google Login
 	const googleLogin = async () => {
-		await getCsrfToken();
-		window.location.href = `${backendUrl}/auth/google/redirect`;
+		// Redirection vers Google OAuth (le module Sanctum s'occupe du reste)
+		window.location.href = `${$sanctum.config.baseUrl}/auth/google/redirect`;
 	};
 
+	// Logout
 	const logout = async () => {
-		const xsrfToken = useCookie('XSRF-TOKEN').value as string;
-
-		await $fetch(`${backendUrl}/logout`, {
-			method: 'POST',
-			credentials: 'include',
-			headers: {
-				Accept: 'application/json',
-				'X-XSRF-TOKEN': xsrfToken,
-			},
-		});
-
-		// Récupérer un nouveau token CSRF après déconnexion pour les futures requêtes sécurisées.
-		await getCsrfToken();
-
-		navigateTo('/');
-
+		await $sanctum.logout();
 		userStore.clearUser();
+		navigateTo('/');
 	};
 
+	// Fetch user
 	const fetchUser = async () => {
 		try {
-			const { data } = await useApiFetch<User>('/user');
-			if (data.value) {
-				userStore.setUser(data.value);
+			const user = await $sanctum.user();
+			if (user) {
+				userStore.setUser(user as User);
+			} else {
+				userStore.clearUser();
 			}
 		} catch (error) {
 			userStore.clearUser();

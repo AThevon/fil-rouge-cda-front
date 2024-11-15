@@ -15,10 +15,6 @@
 	import { useProductStore } from '~/stores/products';
 	import { storeToRefs } from 'pinia';
 
-	definePageMeta({
-		middleware: 'auth',
-	});
-
 	const productStore = useProductStore();
 
 	if (!productStore.products.length) {

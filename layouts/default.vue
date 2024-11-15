@@ -31,7 +31,7 @@
 					</NuxtLink>
 				</li>
 			</ul>
-			<div v-if="!userStore.isAuthenticated" class="flex space-x-2">
+			<div v-if="!isAuthenticated" class="flex space-x-2">
 				<UButton to="/register" class="text-sm"> S'inscrire </UButton>
 				<UButton to="/login" class="text-sm"> Se connecter </UButton>
 			</div>
@@ -42,12 +42,6 @@
 		</nav>
 		<main class="h-full">
 			<slot />
-			<div
-				v-if="userStore.isAuthenticated"
-				class="fixed right-0 bottom-0 z-10 bg-red w-[20rem] h-[10rem]"
-			>
-      {{ userStore.user }}
-    </div>
 		</main>
 		<footer class="relative flex justify-center items-center h-16">
 			<p class="absolute inset-x-0 text-sm text-center text-gray-500">
@@ -75,8 +69,7 @@
 		icon: any;
 	};
 
-	const userStore = useUserStore();
-	const { logout } = useAuth();
+	const { logout, isAuthenticated } = useSanctumAuth();
 
 	const links: Link[] = [
 		{ name: 'Accueil', to: '/', icon: Home },
