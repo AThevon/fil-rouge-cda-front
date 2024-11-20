@@ -34,8 +34,7 @@
 <script lang="ts" setup>
 	import { useProductStore } from '~/stores/products';
 
-	const $route = useRoute();
-	const productId = Number($route.params.id);
+	const productId = Number(useRoute().params.id);
 	const productStore = useProductStore();
 
 	const product = productStore.getProductById(productId);
