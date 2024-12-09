@@ -1,6 +1,19 @@
 export default defineAppConfig({
-  ui: {
-    primary: 'amber',
-    gray: 'neutral',
-  }
-})
+	ui: {
+		primary: 'aqua-forest',
+		secondary: 'mongoose',
+		gray: 'stone',
+		button: {
+			default: {
+				color: 'primary',
+			},
+			colors: {
+				secondary: 'cyan', 
+				danger: 'red',
+			},
+		},
+		notifications: {
+			position: 'top-[unset] bottom-0',
+		},
+	},
+});

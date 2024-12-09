@@ -75,12 +75,16 @@
 				Aucun produit trouvé pour cette catégorie.
 			</p>
 		</div>
+		<UButton size="xl" class="mt-20" @click="handleTest"
+			>BOUTON TEST STRIPE</UButton
+		>
 	</div>
 </template>
 
 <script setup lang="ts">
 	import { useProductStore } from '~/stores/products';
 	import { storeToRefs } from 'pinia';
+	import { loadStripe } from '@stripe/stripe-js';
 
 	const productStore = useProductStore();
 	await Promise.all([
@@ -90,4 +94,33 @@
 
 	const { filteredProducts, categories, error, loading, selectedCategory } =
 		storeToRefs(productStore);
+
+	const stripeKey = useRuntimeConfig().public.stripeKey;
+
+	const handleTest = async () => {
+		try {
+			// Charge Stripe.js avec ta clé publique
+			const stripe = await loadStripe(stripeKey); // Remplace par ta clé publique
+
+			// Simulation d'une commande
+			const orderId = 1; // ID d'une commande existante dans la base de données
+			const amount = 59999; // Prix du produit en euros
+
+			// Appelle ton backend pour créer une session Stripe Checkout
+			const response: any = await fetching('/checkout', {
+				method: 'POST',
+				body: { orderId, amount },
+			});
+
+			if (response && response.id) {
+            console.log(response.id)
+				// Redirection vers Stripe Checkout
+				await stripe?.redirectToCheckout({ sessionId: response.id });
+			} else {
+				throw new Error('ID de session Stripe manquant');
+			}
+		} catch (error) {
+			console.error('Erreur lors de la création de la session Stripe:', error);
+		}
+	};
 </script>

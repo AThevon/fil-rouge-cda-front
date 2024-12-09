@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<NuxtImg src="woodies-hero.png" alt="" class="object-contain rounded-xl" />
+		<NuxtImg src="wooden-hero.png" alt="" class="object-contain rounded-xl" />
 	</div>
 </template>
 

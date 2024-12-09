@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* RESET CSS */
+/* body {
+	overflow-y: scroll;
+	overflow-x: hidden;
+} */
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+	@apply font-bold text-primary-600 dark:text-primary-400;
+}
+
+ul,
+ol,
+li {
+	list-style: none;
+}
+
+button,
+a.btn {
+	@apply !text-white transition-all active:scale-[0.98];
+}
+
+button:not(:focus-visible),
+a.btn:not(:focus-visible) {
+	outline: none !important;
+}
+
+/* ANIMATIONS CHANGEMENT PAGE */
+.slide-fade-y-enter-active,
+.slide-fade-y-leave-active,
+.slide-fade-y-reverse-enter-active,
+.slide-fade-y-reverse-leave-active {
+   transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.slide-fade-y-enter-from {
+   transform: translateY(100%);
+   opacity: 0;
+}
+
+.slide-fade-y-leave-to {
+   transform: translateY(-100%);
+   opacity: 0;
+}
+
+.slide-fade-y-reverse-enter-from {
+   transform: translateY(-100%);
+   opacity: 0;
+}
+
+.slide-fade-y-reverse-leave-to {
+   transform: translateY(100%);
+   opacity: 0;
+}

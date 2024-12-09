@@ -1,80 +1,140 @@
 <template>
-	<div class="flex items-center justify-center min-h-[85vh]">
-		<div class="w-full max-w-md p-8 bg-white rounded shadow-md">
-			<h2 class="mb-6 text-2xl font-bold text-center">Connexion</h2>
-			<form @submit.prevent="handleLogin">
-				<div class="mb-4">
-					<label for="email" class="block mb-2 text-sm font-medium"
-						>Email</label
-					>
-					<input
-						v-model="email"
+	<div class="flex items-center justify-center min-h-[80vh]">
+		<div class="w-full max-w-sm">
+			<h2 class="mb-4 text-2xl font-bold uppercase text-center">Connexion</h2>
+			<UForm
+				:schema="schema"
+				:state="state"
+				class="space-y-4"
+				@submit="handleLogin"
+			>
+				<UFormGroup label="Email" name="email">
+					<UInput
+						size="lg"
 						id="email"
+						v-model="state.email"
 						type="email"
-						placeholder="Votre email"
-						class="w-full p-2 border rounded"
-						required
+						icon="i-material-symbols-alternate-email"
 					/>
-				</div>
-				<div class="mb-6">
-					<label for="password" class="block mb-2 text-sm font-medium"
-						>Mot de passe</label
-					>
-					<input
-						v-model="password"
+				</UFormGroup>
+
+				<UFormGroup label="Mot de passe" name="password">
+					<UInput
+						size="lg"
 						id="password"
+						v-model="state.password"
 						type="password"
-						placeholder="Votre mot de passe"
-						class="w-full p-2 border rounded"
-						required
+						icon="i-solar-lock-password-bold"
 					/>
-				</div>
-				<button
+				</UFormGroup>
+
+				<UButton
+					padded
+					block
 					type="submit"
-					class="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-600"
+					label="Se connecter"
+					size="xl"
+					class="group transition-all active:scale-[0.98]"
 				>
-					Se connecter
-				</button>
-			</form>
-			<div v-if="errorMessage" class="mt-4 text-sm text-red-600">
-				{{ errorMessage }}
-			</div>
-			<div class="mt-6 text-center">
-				<button
+					<template #trailing>
+						<UIcon
+							name="i-heroicons-arrow-right-20-solid"
+							class="transition-all h-5 w-0 group-hover:w-5"
+						/>
+					</template>
+				</UButton>
+			</UForm>
+
+			<p class="text-center mt-4 text-sm text-neutral-500">
+				Vous n'avez pas de compte ?
+				<UButton to="/register" class="text-primary p-0 ml-1" variant="link">
+					Inscrivez-vous
+				</UButton>
+			</p>
+
+			<UDivider class="my-4" label="OU" />
+
+			<div class="text-center">
+				<UButton
+					padded
+					block
+					label="Connexion avec Google"
+					icon="i-gg-google"
+					size="xl"
+					color="blue"
 					@click="handleGoogleLogin"
-					class="w-full px-4 py-2 font-bold text-white bg-red-500 rounded hover:bg-red-600"
+					class="group !text-neutral-50"
 				>
-					Connexion avec Google
-				</button>
+					<template #trailing>
+						<UIcon
+							name="i-heroicons-arrow-right-20-solid"
+							class="w-0 transition-all group-hover:w-5 h-5"
+						/>
+					</template>
+				</UButton>
 			</div>
+			<p class="text-center mt-8 text-sm text-neutral-500">
+				En vous connectant, vous acceptez nos
+				<UButton to="/terms" class="text-primary p-0 ml-1" variant="link"
+					>Conditions d'utilisation</UButton
+				>
+				et notre
+				<UButton to="/privacy" class="text-primary p-0 ml-1" variant="link"
+					>Politique de confidentialité</UButton
+				>
+			</p>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
+	import { z } from 'zod';
+	import type { FormSubmitEvent } from '#ui/types';
+
 	definePageMeta({
-		middleware: ['sanctum:guest'],
+		sanctum: {
+			excluded: true,
+		},
 	});
 
-	const email = ref('');
-	const password = ref('');
-	const errorMessage = ref('');
+	// Définir le schéma de validation avec zod
+	const schema = z.object({
+		email: z.string().email('Veuillez entrer un email valide.'),
+		password: z
+			.string()
+			.min(8, 'Le mot de passe doit contenir au moins 8 caractères.'),
+	});
+
+	type Schema = z.output<typeof schema>;
+
+	// Définir l'état réactif pour le formulaire
+	const state = reactive({
+		email: '',
+		password: '',
+	});
 
 	const { login, refreshIdentity } = useSanctumAuth();
 	const baseUrl = useRuntimeConfig().public.sanctum.baseUrl;
+	const toast = useToast();
 
-	const handleLogin = async () => {
+	async function handleLogin(event: FormSubmitEvent<Schema>) {
 		try {
-			await login({ email: email.value, password: password.value });
+			await login(event.data);
+			toast.clear();
 		} catch (error) {
-			errorMessage.value =
-				'Échec de la connexion. Veuillez vérifier vos identifiants.';
+			toast.add({
+				color: 'red',
+				title: 'Attention',
+				description: 'Email ou mot de passe incorrect',
+				icon: 'i-octicon-alert-24',
+				timeout: 10000,
+			});
 			await refreshIdentity();
 		}
-	};
+	}
 
-	const handleGoogleLogin = async () => {
+	async function handleGoogleLogin() {
 		window.location.href = `${baseUrl}/auth/google/redirect`;
 		await refreshIdentity();
-	};
+	}
 </script>

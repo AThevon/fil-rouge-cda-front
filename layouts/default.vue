@@ -7,13 +7,13 @@
 				class="flex items-end gap-1 transition-all active:scale-95"
 			>
 				<NuxtImg
-					src="/woodies-icon.png"
-					alt="Logo de Woodies"
+					src="/wooden-icon.png"
+					alt="Logo de Wooden Factory"
 					width="auto"
 					height="auto"
 					class="object-contain w-12 h-12"
 				/>
-				<h1 class="text-2xl mb-[2px] font-bold font-second">Woodies</h1>
+				<h1 class="text-2xl mb-[2px] font-bold font-second">Wooden Factory</h1>
 			</NuxtLink>
 			<ul class="flex gap-5 absolute inset-x-0 mx-auto w-max">
 				<li v-for="link in links" :key="link.to">
@@ -45,7 +45,7 @@
 		</main>
 		<footer class="relative flex justify-center items-center h-16">
 			<p class="absolute inset-x-0 text-sm text-center text-gray-500">
-				&copy; 2021 Woodies. Tous droits réservés.
+				&copy; 2024 Wooden Factory. Tous droits réservés.
 			</p>
 			<div class="z-10 ml-auto mr-4 mb-2">
 				<ThemeToggle />

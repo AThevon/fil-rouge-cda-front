@@ -1,12 +1,17 @@
 export default defineNuxtConfig({
 	compatibilityDate: '2024-11-10',
 	devtools: { enabled: true },
+	tailwindcss: {
+		cssPath: '~/assets/css/main.css',
+	},
 	modules: [
 		'@nuxt/ui',
 		'@nuxt/image',
 		'@nuxt/fonts',
-		'@pinia/nuxt',
 		'nuxt-auth-sanctum',
+		'@nuxtjs/tailwindcss',
+		'dayjs-nuxt',
+		'@pinia/nuxt',
 	],
 	sanctum: {
 		mode: 'cookie',
@@ -36,7 +41,7 @@ export default defineNuxtConfig({
 		},
 		globalMiddleware: {
 			enabled: false,
-			allow404WithoutAuth: true,
+			allow404WithoutAuth: false,
 		},
 		logLevel: 3,
 		appendPlugin: false,
@@ -44,23 +49,39 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		public: {
 			baseUrl: process.env.BASE_URL,
+			contactEmail: process.env.CONTACT_EMAIL,
+         stripeKey: process.env.STRIPE_KEY,
 			sanctum: {
 				baseUrl: process.env.BASE_URL || 'http://localhost:8000',
 			},
 		},
 	},
+	dayjs: {
+		locales: ['fr', 'en'],
+		defaultLocale: 'fr',
+	},
 	colorMode: {
 		preference: 'light',
 	},
-	// fonts: {
-	// 	google: {
-	// 		families: ['Montserrat', 'New Amsterdam'],
-	// 	},
-	// },
 	app: {
 		pageTransition: {
 			name: 'slide-fade-y',
 			mode: 'out-in',
+		},
+	},
+	fonts: {
+		defaults: {
+			weights: [400],
+			styles: ['normal', 'italic'],
+			subsets: [
+				'cyrillic-ext',
+				'cyrillic',
+				'greek-ext',
+				'greek',
+				'vietnamese',
+				'latin-ext',
+				'latin',
+			],
 		},
 	},
 });
