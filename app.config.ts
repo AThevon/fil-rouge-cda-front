@@ -1,11 +1,12 @@
 export default defineAppConfig({
 	ui: {
-		primary: 'aqua-forest',
-		secondary: 'mongoose',
+		primary: 'main',
+		secondary: 'second',
 		gray: 'stone',
 		button: {
 			default: {
 				color: 'primary',
+            size: 'xl',
 			},
 			colors: {
 				secondary: 'cyan', 

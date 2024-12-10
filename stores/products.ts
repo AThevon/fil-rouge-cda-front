@@ -7,15 +7,15 @@ export const useProductStore = defineStore('productStore', {
 		categories: [] as Category[],
 		loading: false,
 		error: null as Error | null,
-		selectedCategory: 'all' as string | number,
+		selectedCategory: 0 as number,
 	}),
 	getters: {
 		filteredProducts: (state) => {
-			if (state.selectedCategory === 'all') {
+			if (state.selectedCategory === 0) {
 				return state.products;
 			}
 			return state.products.filter(
-				(product) => product.category.id === state.selectedCategory,
+				(product) => product.category?.id === state.selectedCategory,
 			);
 		},
 	},

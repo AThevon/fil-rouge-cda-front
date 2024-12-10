@@ -8,7 +8,7 @@ export default <Partial<Config>>{
 				sans: ['Raleway', ...defaultTheme.fontFamily.sans],
 			},
 			colors: {
-				'aqua-forest': {
+				'main': {
 					'50': '#f0f9f3',
 					'100': '#dbf0e0',
 					'200': '#b9e1c5',
@@ -21,7 +21,7 @@ export default <Partial<Config>>{
 					'900': '#173d2a',
 					'950': '#0c2218',
 				},
-				'mongoose': {
+				'second': {
 					'50': '#f6f5f0',
 					'100': '#e9e4d8',
 					'200': '#d6c9b2',

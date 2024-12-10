@@ -4,7 +4,7 @@
 		<nav class="relative flex justify-between items-center my-4 px-6">
 			<NuxtLink
 				to="/"
-				class="flex items-end gap-1 transition-all active:scale-95"
+				class="flex items-end gap-1 transition-all active:scale-[0.98]"
 			>
 				<NuxtImg
 					src="/wooden-icon.png"
@@ -32,11 +32,11 @@
 				</li>
 			</ul>
 			<div v-if="!isAuthenticated" class="flex space-x-2">
-				<UButton to="/register" class="text-sm"> S'inscrire </UButton>
-				<UButton to="/login" class="text-sm"> Se connecter </UButton>
+				<UButton to="/register" class="btn text-sm"> S'inscrire </UButton>
+				<UButton to="/login" class="btn text-sm"> Se connecter </UButton>
 			</div>
 			<div v-else class="flex space-x-2">
-				<UButton to="/profile" class="text-sm"> Mon compte </UButton>
+				<UButton to="/profile" class="btn text-sm"> Mon compte </UButton>
 				<UButton @click="logout" class="text-sm"> Se déconnecter </UButton>
 			</div>
 		</nav>

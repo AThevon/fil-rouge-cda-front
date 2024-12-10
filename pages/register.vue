@@ -1,7 +1,7 @@
 <template>
 	<div class="flex items-center justify-center min-h-[80vh]">
 		<div class="w-full max-w-sm">
-			<h1 class="text-2xl font-semibold text-center mb-6">Créer un compte</h1>
+			<h2 class="mb-4 text-2xl font-bold uppercase text-center">Inscription</h2>
 			<UForm
 				:schema="schema"
 				:state="form"
