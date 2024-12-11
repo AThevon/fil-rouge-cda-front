@@ -12,7 +12,24 @@ export default defineNuxtConfig({
 		'@nuxtjs/tailwindcss',
 		'dayjs-nuxt',
 		'@pinia/nuxt',
+		'@nuxtjs/turnstile',
 	],
+	runtimeConfig: {
+      turnstile: {
+         secretKey: process.env.TURNSTILE_SITE_KEY,
+      },
+		public: {
+			baseUrl: process.env.BASE_URL,
+			contactEmail: process.env.CONTACT_EMAIL,
+			stripeKey: process.env.STRIPE_KEY,
+			sanctum: {
+				baseUrl: process.env.BASE_URL || 'http://localhost:8000',
+			},
+		},
+	},
+	turnstile: {
+		siteKey: process.env.TURNSTILE_SITE_KEY,
+	},
 	sanctum: {
 		mode: 'cookie',
 		userStateKey: 'sanctum.user.identity',
@@ -45,16 +62,6 @@ export default defineNuxtConfig({
 		},
 		logLevel: 3,
 		appendPlugin: false,
-	},
-	runtimeConfig: {
-		public: {
-			baseUrl: process.env.BASE_URL,
-			contactEmail: process.env.CONTACT_EMAIL,
-         stripeKey: process.env.STRIPE_KEY,
-			sanctum: {
-				baseUrl: process.env.BASE_URL || 'http://localhost:8000',
-			},
-		},
 	},
 	dayjs: {
 		locales: ['fr', 'en'],

@@ -17,10 +17,11 @@
 							width="30"
 							height="30"
 						/>
-                  <Layers v-else 
-                  class="w-6 h-6"
-                  :class="selected ? '!text-white' : ''"
-                  />
+						<Layers
+							v-else
+							class="w-6 h-6"
+							:class="selected ? '!text-white' : ''"
+						/>
 						<p
 							class="text-md !text-black dark:!text-white font-bold"
 							:class="selected ? '!text-white' : ''"
@@ -54,13 +55,14 @@
 		<p v-else class="text-center text-gray-500">
 			Aucun produit trouvé pour cette catégorie.
 		</p>
+
 	</div>
 </template>
 
 <script setup lang="ts">
 	import { useProductStore } from '~/stores/products';
 	import { storeToRefs } from 'pinia';
-import { Layers } from 'lucide-vue-next';
+	import { Layers } from 'lucide-vue-next';
 
 	const productStore = useProductStore();
 	await Promise.all([

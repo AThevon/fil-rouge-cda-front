@@ -58,6 +58,10 @@
 					/>
 				</UFormGroup>
 
+				<div class="w-full my-4 flex justify-center items-center">
+					<NuxtTurnstile v-model="form.turnstile" ref="turnstile" />
+				</div>
+
 				<UButton
 					padded
 					block
@@ -91,6 +95,7 @@
 				.string()
 				.min(8, 'Le mot de passe doit contenir au moins 8 caractères.'),
 			password_confirmation: z.string(),
+			turnstile: z.string().min(1, 'La vérification est requise.'),
 		})
 		.superRefine((data, ctx) => {
 			if (data.password !== data.password_confirmation) {
@@ -108,10 +113,13 @@
 		email: '',
 		password: '',
 		password_confirmation: '',
+		turnstile: '',
 	});
 
+	const { login, refreshIdentity } = useSanctumAuth();
 	const router = useRouter();
 	const toast = useToast();
+	const turnstile: any = ref(null);
 
 	// Soumission du formulaire
 	const handleSubmit = async () => {
@@ -120,13 +128,20 @@
 				method: 'POST',
 				body: form,
 			});
+
+			await login({
+				email: form.email,
+				password: form.password,
+			});
+
 			toast.add({
 				title: 'Inscription réussie',
 				description: 'Votre compte a été créé avec succès.',
 				icon: 'i-octicon-desktop-download-24',
 				color: 'green',
 			});
-			router.push('/login');
+
+			router.push('/');
 		} catch (error) {
 			toast.add({
 				title: 'Erreur lors de l’inscription',
@@ -134,7 +149,9 @@
 				icon: 'i-octicon-alert-24',
 				color: 'red',
 			});
-			console.error(error);
+
+			await refreshIdentity();
+			turnstile.value.reset();
 		}
 	};
 </script>
