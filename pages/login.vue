@@ -59,11 +59,11 @@
 					padded
 					block
 					label="Connexion avec Google"
-					icon="i-gg-google"
+					icon="i-logos-google-icon"
 					size="xl"
-					color="blue"
+					color="white"
 					@click="handleGoogleLogin"
-					class="group !text-neutral-50"
+					class="group !text-black dark:!text-white"
 				>
 					<template #trailing>
 						<UIcon

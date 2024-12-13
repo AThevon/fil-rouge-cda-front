@@ -1,5 +1,5 @@
 <template>
-	<div class="max-w-4xl bg-red-400 mx-auto px-6 py-12">
+	<div class="max-w-4xl mx-auto px-6 py-12">
 		<h1 class="text-3xl font-bold mb-6">Conditions générales d'utilisation</h1>
 		<p class="leading-relaxed mb-4">
 			Bienvenue sur notre site de vente en ligne dédié à l'artisanat et aux

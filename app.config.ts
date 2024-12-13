@@ -6,10 +6,10 @@ export default defineAppConfig({
 		button: {
 			default: {
 				color: 'primary',
-            size: 'xl',
+				size: 'xl',
 			},
 			colors: {
-				secondary: 'cyan', 
+				secondary: 'cyan',
 				danger: 'red',
 			},
 		},

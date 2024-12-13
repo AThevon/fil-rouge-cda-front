@@ -1,5 +1,5 @@
 <template>
-	<div class="font-main h-screen">
+	<div class="font-main min-h-screen flex flex-col">
 		<!-- <BurgerMenu :links="links" /> -->
 		<nav class="relative flex justify-between items-center my-4 px-6">
 			<NuxtLink
@@ -40,7 +40,7 @@
 				<UButton @click="logout" class="text-sm"> Se déconnecter </UButton>
 			</div>
 		</nav>
-		<main class="h-full">
+		<main class="h-full flex-1">
 			<slot />
 		</main>
 		<footer class="relative flex justify-center items-center h-16">

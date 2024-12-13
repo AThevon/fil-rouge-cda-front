@@ -1,22 +1,24 @@
 <template>
-	<component
-		ref="iconComponent"
-		:is="icon"
-		@click="toggleDarkMode"
-		class="w-8 h-8 cursor-pointer transition-opacity opacity-60 hover:opacity-100"
-	/>
+	<div ref="iconComponent" class="w-8 h-8 cursor-pointer">
+		<Icon
+			:name="icon"
+			:is="icon"
+			@click="toggleDarkMode"
+			class="w-full h-full transition-all opacity-60 hover:opacity-100 active:scale-110"
+		/>
+	</div>
 </template>
 
 <script setup>
 	import { ref, computed, onMounted, nextTick } from 'vue';
-	import { Sun, Moon } from 'lucide-vue-next';
 	import gsap from 'gsap';
 
 	const isDarkMode = ref(false);
-
-	const icon = computed(() => (isDarkMode.value ? Sun : Moon));
-
 	const iconComponent = ref(null);
+
+	const icon = computed(() =>
+		isDarkMode.value ? 'i-heroicons-sun-20-solid' : 'i-heroicons-moon-20-solid',
+	);
 
 	onMounted(() => {
 		if (localStorage.getItem('theme') === 'dark') {

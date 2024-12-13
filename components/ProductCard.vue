@@ -29,13 +29,15 @@
 		</div>
 
 		<div class="flex items-center justify-between">
-			<p
-				class="text-lg font-bold text-main-600 dark:text-main-400"
-			>
+			<p class="text-lg font-bold text-main-600 dark:text-main-400">
 				{{ product.price / 100 }} €
 			</p>
-			<UButton :to="`/catalog/${product.id}`" class="btn">
-				Voir le produit
+			<UButton
+				:to="`/catalog/${product.id}`"
+				icon="i-cil-magnifying-glass"
+				class="btn"
+			>
+				Voir
 			</UButton>
 		</div>
 		<!-- CTA Button -->
