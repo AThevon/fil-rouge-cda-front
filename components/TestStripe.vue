@@ -24,7 +24,6 @@
 			});
 
 			if (response && response.id) {
-				console.log(response.id);
 				// Redirection vers Stripe Checkout
 				await stripe?.redirectToCheckout({ sessionId: response.id });
 			} else {

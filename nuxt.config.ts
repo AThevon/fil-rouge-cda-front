@@ -72,7 +72,7 @@ export default defineNuxtConfig({
 	},
 	app: {
 		pageTransition: {
-			name: 'slide-fade-y',
+			name: 'slide-fade-scale',
 			mode: 'out-in',
 		},
 	},

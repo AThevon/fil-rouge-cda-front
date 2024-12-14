@@ -18,6 +18,7 @@
 						required
 						size="lg"
 						class="mt-1 w-full"
+						:disabled="!!user"
 					/>
 				</UFormGroup>
 
@@ -30,6 +31,7 @@
 						required
 						size="lg"
 						class="mt-1 w-full"
+						:disabled="!!user"
 					/>
 				</UFormGroup>
 
@@ -51,6 +53,7 @@
 					label="Envoyer"
 					size="xl"
 					class="group transition-all active:scale-[0.98]"
+					:loading="isLoading"
 				/>
 			</UForm>
 		</div>
@@ -64,6 +67,7 @@
 
 	const user = useSanctumUser<{ user: User }>().value?.user;
 	const toast = useToast();
+	const isLoading = ref(false);
 
 	// Schéma de validation
 	const schema = z.object({
@@ -83,6 +87,7 @@
 
 	// Soumission du formulaire
 	const handleSubmit = async () => {
+		isLoading.value = true;
 		try {
 			await fetching('/contact', {
 				method: 'POST',
@@ -97,8 +102,10 @@
 			});
 
 			// Réinitialisation du formulaire
-			form.name = '';
-			form.email = '';
+			if (!user) {
+				form.name = '';
+				form.email = '';
+			}
 			form.message = '';
 		} catch (error) {
 			toast.add({
@@ -107,6 +114,8 @@
 				icon: 'i-octicon-alert-24',
 				color: 'red',
 			});
+		} finally {
+			isLoading.value = false;
 		}
 	};
 </script>
